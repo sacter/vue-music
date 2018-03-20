@@ -1,6 +1,6 @@
 <template>
   <div>
-    歌手页面
+    歌手页面(测试一下)
   </div>
 </template>
 
