@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="recommend"  ref="recommend">
     <div v-if="recommends.length" class="slider-wrapper" ref="sliderWrapper">
       <slider>
@@ -10,7 +10,7 @@
       </slider>
     </div>
     <div class="recommend-list">
-      <h1 class="list-title">热门歌单</h1>
+      <h1 class="list-title">热门歌单推荐</h1>
     </div>
   </div>
 </template>
