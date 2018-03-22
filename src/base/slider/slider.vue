@@ -64,7 +64,7 @@
     deactivated() {
       clearTimeout(this.timer)
     },
-    beforeDestroy() {
+    destroyed() {
       clearTimeout(this.timer)
     },
     methods: {
