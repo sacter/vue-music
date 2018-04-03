@@ -22,9 +22,10 @@
         methods:{
           selectItem(item,index){
             this.$emit('select',item,index);
+            console.log(this.songs); 
           },
             getDesc(song){
-                return `${song.singer} . ${song.album}`;
+                return `${song.singer} . ${song.album}`;             
             }
         }
     }
