@@ -28,6 +28,9 @@
                 <img class="image" :src="currentSong.image">
               </div>
             </div>
+            <div class="playing-lyric-wrapper">
+              <div class="playing-lyric">{{playingLyric}}</div>
+            </div>
           </div>
           <scroll class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines">
             <div class="lyric-wrapper">
@@ -125,7 +128,8 @@
         radius:32,
         currentLyric:null,
         currentLineNum:0,
-        currentShow:'cd'
+        currentShow:'cd',
+        playingLyric:''
       }
     },
     computed:{
@@ -212,31 +216,47 @@
         }
       },
       loop(){
-        this.$refs.audio.currentTime=0;
-        this.$refs.audio.play();
+        this.$refs.audio.currentTime = 0
+        this.$refs.audio.play()
+        this.setPlayingState(true)
+        if (this.currentLyric) {
+          this.currentLyric.seek(0)
+        }
       },
       next(){
-        if(!this.songReady){return};
-        let index=this.currentIndex+1;
-        if(index===this.playlist.length){
-          index=0;
-        };
-        this.setCurrentIndex(index);
-        if(!this.playing){
-          this.togglePlaying();
-        };
-        this.songReady=false;
+        if (!this.songReady) {
+          return
+        }
+        if (this.playlist.length === 1) {
+          this.loop()
+          return
+        } else {
+          let index = this.currentIndex + 1
+          if (index === this.playlist.length) {
+            index = 0
+          }
+          this.setCurrentIndex(index)
+          if (!this.playing) {
+            this.togglePlaying()
+          }
+        }
+        this.songReady = false
       },
       prev(){
         if(!this.songReady){return};
-        let index=this.currentIndex-1;
-        if(index===-1){
-          index=this.playlist.length-1;
-        };
-        this.setCurrentIndex(index);
-        if(!this.playing){
-          this.togglePlaying();
-        };
+        if (this.playlist.length === 1) {
+          this.loop()
+          return
+        } else {
+          let index = this.currentIndex - 1
+          if (index === -1) {
+            index = this.playlist.length - 1
+          }
+          this.setCurrentIndex(index)
+          if (!this.playing) {
+            this.togglePlaying()
+          }
+        }
         this.songReady=false;
       },
       ready(){
@@ -255,9 +275,13 @@
         return `${minute}:${second}`;
       },
       onProgressBarChange(percent){
-        this.$refs.audio.currentTime=this.currentSong.duration*percent;
-        if(!this.playing){
-          this.togglePlaying();
+        const currentTime = this.currentSong.duration * percent
+        this.$refs.audio.currentTime = currentTime
+        if (!this.playing) {
+          this.togglePlaying()
+        }
+        if (this.currentLyric) {
+          this.currentLyric.seek(currentTime * 1000)
         }
       },
       changeMode(){
@@ -284,6 +308,10 @@
           if(this.playing){
             this.currentLyric.play();
           }
+        }).catch(() => {
+          this.currentLyric = null
+          this.playingLyric = ''
+          this.currentLineNum = 0
         })
       },
       handleLyric({lineNum, txt}) {
@@ -381,7 +409,13 @@
         }
       },
       togglePlaying(){       
-        this.setPlayingState(!this.playing);
+        if (!this.songReady) {
+          return
+        }
+        this.setPlayingState(!this.playing)
+        if (this.currentLyric) {
+          this.currentLyric.togglePlay()
+        }
       },
       ...mapMutations({
         setFullScreen:'SET_FULL_SCREEN',
@@ -395,11 +429,18 @@
       currentSong(newSong,oldSong){
         if(newSong.id===oldSong.id){
           return;
-        }
-        this.$nextTick(()=>{
-          this.$refs.audio.play();
-          this.getLyric();
-        })
+        };
+        if (this.currentLyric) {
+          this.currentLyric.stop()
+          this.currentTime = 0
+          this.playingLyric = ''
+          this.currentLineNum = 0
+        };
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.$refs.audio.play()
+          this.getLyric()
+        }, 1000)
       },
       playing(newPlaying){
         const audio=this.$refs.audio;
