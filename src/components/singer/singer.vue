@@ -39,9 +39,9 @@
         this.setSinger(singer)
       },
       handlePlaylist(playlist) {
-        const bottom = playlist.length > 0 ? '60px' : ''
-        this.$refs.singer.style.bottom = bottom
-        this.$refs.list.refresh()
+        const bottom = playlist.length > 0 ? '60px' : '';
+        this.$refs.singer.style.bottom = bottom;
+        this.$refs.list.refresh();
       },
       _getSingerList() {
         getSingerList().then((res) => {
