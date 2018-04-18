@@ -6,7 +6,9 @@
 
 <script type="text/ecmascript-6">
   import MusicList from 'components/music-list/music-list'
+  import {getSongList} from 'api/recommend'
   import {mapGetters} from 'vuex'
+  import {ERR_OK} from 'api/config'
 
   export default {
     computed:{
@@ -19,6 +21,26 @@
       ...mapGetters ([
         'disc'
       ])
+    },
+    created() {
+      this._getSongList()
+    },
+    methods:{
+      _getSongList() {
+        console.log(11);
+        
+        if (!this.disc.dissid) {
+          this.$router.push('/recommend')
+          return
+        }
+        getSongList(this.disc.dissid).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log(res.cdlist[0].songlist);
+            
+            // this.songs = this._normalizeSongs(res.cdlist[0].songlist)
+          }
+        })
+      }
     },
     components: {
       MusicList
