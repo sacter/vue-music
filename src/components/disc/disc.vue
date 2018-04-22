@@ -36,7 +36,7 @@
         getSongList(this.disc.dissid).then((res) => {
           // console.log(res);         
           if (res.code === ERR_OK) {
-            console.log(res.cdlist);
+            // console.log(res.cdlist);
             
             // this.songs = this._normalizeSongs(res.cdlist[0].songlist)
           }
