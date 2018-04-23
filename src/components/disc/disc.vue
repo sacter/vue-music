@@ -27,8 +27,6 @@
     },
     methods:{
       _getSongList() {
-        console.log(11);
-        
         if (!this.disc.dissid) {
           this.$router.push('/recommend')
           return
@@ -36,8 +34,7 @@
         getSongList(this.disc.dissid).then((res) => {
           // console.log(res);         
           if (res.code === ERR_OK) {
-            // console.log(res.cdlist);
-            
+            console.log(res.cdlist);            
             // this.songs = this._normalizeSongs(res.cdlist[0].songlist)
           }
         })
