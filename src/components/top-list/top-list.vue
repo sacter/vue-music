@@ -43,6 +43,7 @@
         }
         getMusicList(this.topList.id).then((res) => {
           if (res.code === ERR_OK) {
+            console.log(res.songlist)
             this.songs = this._normalizeSongs(res.songlist)
           }
         })
