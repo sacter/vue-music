@@ -51,7 +51,7 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
-//   @import "~common/stylus/mixin"
+  @import "~common/stylus/mixin"
 
   .song-list
     .item
