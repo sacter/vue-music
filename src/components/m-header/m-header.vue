@@ -29,7 +29,9 @@
       width: 30px
       height: 32px
       margin-right: 9px
-      bg-image('logo')
+      // bg-image('logo')
+      background-image url('scater.jpg')
+      border-radius 6px
       background-size: 30px 32px
     .text
       display: inline-block
