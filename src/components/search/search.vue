@@ -5,7 +5,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-  
+  import SearchBox from 'base/search-box/search-box.vue'
+
+  export default {
+    components: {
+      SearchBox
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
