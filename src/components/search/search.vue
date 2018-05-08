@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    
+    <search-box></search-box>
   </div>
 </template>
 
