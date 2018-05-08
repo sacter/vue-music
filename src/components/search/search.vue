@@ -6,10 +6,26 @@
 
 <script type="text/ecmascript-6">
   import SearchBox from 'base/search-box/search-box.vue'
+  import {getHotKey} from 'api/search'
+  import {ERR_OK} from 'api/config'
 
   export default {
+    created () {
+      this._getHotKey()
+    },
     components: {
       SearchBox
+    },
+    methods: {
+      _getHotKey() {
+        getHotKey().then((res) => {
+          console.log(res);
+          
+          // if (res.code === ERR_OK) {
+          //   this.hotKey = res.data.hotkey.slice(0, 10)
+          // }
+        })
+      }
     }
   }
 </script>
