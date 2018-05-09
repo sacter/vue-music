@@ -25,7 +25,22 @@
   // import Singer from 'common/js/singer'
 
   export default {
-
+    props: {
+      query: {
+        type: String,
+        default: ''
+      }
+    },
+    methods: {
+      search () {
+        
+      }
+    },
+    watch: {
+      query() {
+        this.search()
+      }
+    }
   }
 </script>
 
