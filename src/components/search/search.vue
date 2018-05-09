@@ -15,7 +15,7 @@
           </div>
         </div>  
     </div>
-    <div class="search-result" v-show="query" ref="searchResult">
+    <div class="search-result" v-show="query">
       <suggest ref="suggest" :query="query"></suggest>
     </div>
   </div>
