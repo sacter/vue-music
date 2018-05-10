@@ -2,7 +2,8 @@
   <scroll class="suggest" 
     :data="result"
     :pullup="pullup"
-    @scrollToEnd="searchMore">
+    @scrollToEnd="searchMore"
+    ref="suggest">
     <ul class="suggest-list">
       <li class="suggest-item" v-for="item in result" :key="item.id">
         <div class="icon">
@@ -53,8 +54,8 @@
     methods: {
       search () {
         this.page = 1
-        // this.hasMore = true
-        // this.$refs.suggest.scrollTo(0, 0)
+        this.hasMore = true
+        this.$refs.suggest.scrollTo(0, 0)
         search(this.query, this.page, this.showSinger, perpage).then((res) => {
           if (res.code === ERR_OK) {
             this.result = this._genResult(res.data)
