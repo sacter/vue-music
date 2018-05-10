@@ -1,5 +1,8 @@
 <template>
-  <scroll class="suggest" :data="result">
+  <scroll class="suggest" 
+    :data="result"
+    :pullup="pullup"
+    :scrollToEnd="searchMore">
     <ul class="suggest-list">
       <li class="suggest-item" v-for="item in result" :key="item.id">
         <div class="icon">
