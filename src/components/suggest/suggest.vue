@@ -1,5 +1,5 @@
 <template>
-  <div class="suggest">
+  <scroll class="suggest" :data="result">
     <ul class="suggest-list">
       <li class="suggest-item" v-for="item in result" :key="item.id">
         <div class="icon">
@@ -11,11 +11,11 @@
       </li>
       <!-- <loading v-show="hasMore" title=""></loading> -->
     </ul>
-  </div>
+  </scroll>
 </template>
 
 <script type="text/ecmascript-6">
-  // import Scroll from 'base/scroll/scroll'
+  import Scroll from 'base/scroll/scroll'
   // import Loading from 'base/loading/loading'
   // import NoResult from 'base/no-result/no-result'
   import {search} from 'api/search'
@@ -98,6 +98,9 @@
           this.hasMore = false
         }
       }
+    },
+    components: {
+      Scroll
     },
     watch: {
       query() {
