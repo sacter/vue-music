@@ -2,7 +2,7 @@
   <scroll class="suggest" 
     :data="result"
     :pullup="pullup"
-    :scrollToEnd="searchMore">
+    @scrollToEnd="searchMore">
     <ul class="suggest-list">
       <li class="suggest-item" v-for="item in result" :key="item.id">
         <div class="icon">
@@ -12,14 +12,14 @@
           <p class="text" v-html="getDisplayName(item)"></p>
         </div>
       </li>
-      <!-- <loading v-show="hasMore" title=""></loading> -->
+      <loading v-show="hasMore" title=""></loading>
     </ul>
   </scroll>
 </template>
 
 <script type="text/ecmascript-6">
   import Scroll from 'base/scroll/scroll'
-  // import Loading from 'base/loading/loading'
+  import Loading from 'base/loading/loading'
   // import NoResult from 'base/no-result/no-result'
   import {search} from 'api/search'
   import {ERR_OK} from 'api/config'
@@ -115,7 +115,8 @@
       }
     },
     components: {
-      Scroll
+      Scroll,
+      Loading
     },
     watch: {
       query() {
