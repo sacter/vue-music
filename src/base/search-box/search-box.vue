@@ -16,7 +16,7 @@
     },
     data () {
       return {
-        query: ''
+        query: '',
       }
     },
     methods: {
