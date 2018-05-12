@@ -5,7 +5,7 @@
     @scrollToEnd="searchMore"
     ref="suggest">
     <ul class="suggest-list">
-      <li class="suggest-item" v-for="item in result" :key="item.id">
+      <li @click="selectItem(item)" class="suggest-item" v-for="item in result" :key="item.id">
         <div class="icon">
           <i :class="getIconCls(item)"></i>
         </div>
@@ -25,8 +25,8 @@
   import {search} from 'api/search'
   import {ERR_OK} from 'api/config'
   import {createSong} from 'common/js/song'
-  // import {mapMutations, mapActions} from 'vuex'
-  // import Singer from 'common/js/singer'
+  import {mapMutations, mapActions} from 'vuex'
+  import Singer from 'common/js/singer'
 
   const TYPE_SINGER = 'singer'
   const perpage = 20
@@ -75,6 +75,21 @@
           }
         })
       },
+      selectItem(item) {
+        if (item.type === TYPE_SINGER) {
+          const singer = new Singer({
+            id: item.singermid,
+            name: item.singername
+          })
+          this.$router.push({
+            path: `/search/${singer.id}`
+          })
+          this.setSinger(singer)
+        } else {
+          this.insertSong(item)
+        }
+        this.$emit('select', item)
+      },
       getDisplayName(item) {
         if (item.type === TYPE_SINGER) {
           return item.singername
@@ -113,7 +128,13 @@
         if (!song.list.length || (song.curnum + song.curpage * perpage) > song.totalnum) {
           this.hasMore = false
         }
-      }
+      },
+      ...mapMutations({
+        setSinger: 'SET_SINGER'
+      }),
+      ...mapActions([
+        'insertSong'
+      ])
     },
     components: {
       Scroll,
