@@ -1,8 +1,11 @@
 <template>
-  <scroll class="suggest" 
+  <scroll 
+    class="suggest"
     :data="result"
     :pullup="pullup"
+    :beforeScroll="beforeScroll"
     @scrollToEnd="searchMore"
+    @beforeScroll="listScroll"
     ref="suggest">
     <ul class="suggest-list">
       <li @click="selectItem(item)" class="suggest-item" v-for="item in result" :key="item.id">
@@ -77,6 +80,9 @@
             this._checkMore(res.data)
           }
         })
+      },
+      listScroll() {
+        this.$emit('listScroll')
       },
       selectItem(item) {
         if (item.type === TYPE_SINGER) {
